@@ -12,6 +12,8 @@ export default function FormPage() {
         description: ""
     })
 
+
+
     const updateTask = async () => {
         try {
             const res = await fetch(`/api/tasks/${params.id}`,{
@@ -22,7 +24,7 @@ export default function FormPage() {
                 }
             })
             const data = await res.json();
-            router.push('/')
+            router.push('/tasks')
             router.refresh()
         } catch (error) {
             console.log(error);
@@ -60,7 +62,7 @@ export default function FormPage() {
     
     
                 if (res.status === 200) { //ver si esta todo ok
-                    router.push('/')
+                    router.push('/tasks')
                     router.refresh()
                 }
     
@@ -90,7 +92,7 @@ export default function FormPage() {
             })
 
         }
-        router.push('/')
+        router.push('/tasks')
         router.refresh()
     }
 

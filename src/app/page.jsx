@@ -1,34 +1,31 @@
-import { connectDB } from "@/utils/mongoose"
-import Task from "@/models/Task"
+import { SessionProvider } from "next-auth/react"
 import Link from "next/link"
+import styles from "../styles/landing.module.css"
 
 
-async function loadTask() {
-  connectDB()
-  const tasks = await Task.find()
-  return tasks
+
+export default async function Landing() {
+
+
+    return (
+        <div className={styles.container}>
+            <h1 className={styles.h1}>NOTAP</h1>
+            
+            {/* 
+            <input className={styles.input} type="text" placeholder="#user"/>
+            <input className={styles.input}  type="text" placeholder="#Password" />
+            */}
+
+
+
+            <Link href={`/tasks`}>
+                <button className={styles.button}>Login</button>
+            </Link>
+
+
+
+        </div>
+    )
 }
 
 
-export default async function HomePage() {
-  const tasks = await loadTask()
-
-
-
-
-
-
-  return (
-    <div>
-      BUSCAR
-      {tasks.map(task => (
-        <Link href={`/tasks/${task._id}`}>
-          <div key={task._id}>
-            <h3>{task.title}</h3>
-            <p>{task.description}</p>
-          </div>
-        </Link>
-      ))}
-    </div>
-  )
-}
