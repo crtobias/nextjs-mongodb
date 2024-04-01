@@ -1,31 +1,42 @@
-import { SessionProvider } from "next-auth/react"
-import Link from "next/link"
-import styles from "../styles/landing.module.css"
+"use client"
+import { useState } from "react";
+import {signIn} from "next-auth/react"
+import { useRouter } from "next/navigation";
+
+export default function LoginPage(){
+
+    const [error,setError] = useState('');
+    const router = useRouter()
+
+    const handleSubmit = async (e)=>{
+        e.preventDefault()
+        const formData = new FormData(e.currentTarget)
+            const res = await signIn("credentials",{
+                email: formData.get('email'),
+                password: formData.get('password'),
+                redirect: false,
+            })
+            if(res?.error) return setError(res.error)
+            if (res?.ok) return router.push("/tasks")
+            // console.log('testlogin');
+            // console.log(res);
+    }
 
 
-
-export default async function Landing() {
-
-
-    return (
-        <div className={styles.container}>
-            <h1 className={styles.h1}>NOTAP</h1>
-            
-            {/* 
-            <input className={styles.input} type="text" placeholder="#user"/>
-            <input className={styles.input}  type="text" placeholder="#Password" />
-            */}
-
-
-
-            <Link href={`/tasks`}>
-                <button className={styles.button}>Login</button>
-            </Link>
-
-
-
+    return(
+        <div>
+            <form onSubmit={handleSubmit}>
+                {error && <div>
+                    {error}
+                    </div>}
+                <h1>NOTE-APP</h1>
+                <h2>Signin</h2>
+                <input type="email" placeholder="some@mail.com" name="email"/>
+                <input type="password" placeholder="*******" name="password" />
+                <button>
+                    Login
+                </button>
+            </form>
         </div>
     )
 }
-
-
