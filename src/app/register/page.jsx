@@ -17,7 +17,7 @@ export default function RegisterPage(){
         const formData = new FormData(e.currentTarget)
 
         
-
+ 
         try {
             const res =await axios.post('/api/auth/signup',{
                 email: formData.get('email'),
